@@ -16,6 +16,8 @@ public class Ventana extends JFrame {
     private JTextField txtNombre;
     private JLabel lblCosto, lblImagenUbicacion; 
     private double costoTotal = 0;
+    private DefaultTableModel modeloTabla;
+    private JTable tablaHuespedes;
 
     public Ventana() {
         super("Hotel Grand Horizon - Practica de Eventos");
@@ -113,7 +115,12 @@ public class Ventana extends JFrame {
 
         // Parte asignada a: Karol
         // Agregar el evento para guardar en la tabla
-        // btnRegistrar.addActionListener(e -> { llamar a metodo guardar });
+
+btnRegistrar.addActionListener(e -> {
+    registrarReserva(); // Llamamos al metodo de Santi
+    txtNombre.setText(""); // Limpia el nombre 
+    txtNombre.requestFocus(); // Pone el cursor de nuevo
+});
 
         panelBtns.add(btnCalcular);
         panelBtns.add(btnRegistrar);
@@ -139,5 +146,28 @@ public class Ventana extends JFrame {
     private void registrarReserva() {
         // Aquí debes obtener el texto de txtNombre y los datos de los componentes
         // para agregarlos a un DefaultTableModel
+    // Parte asignada a: Santiago Chacon
+    //  Obtenemos los datos
+    String nombre = txtNombre.getText().trim();
+    String ubicacion = comboHabitacion.getSelectedItem().toString();
+    String costo = lblCosto.getText().replace("Total: ", ""); 
+
+    //  Determinamos el tipo de habitación
+    String tipo = "";
+    if (rbSencilla.isSelected()) tipo = "Sencilla";
+    else if (rbDoble.isSelected()) tipo = "Doble";
+    else if (rbSuite.isSelected()) tipo = "Suite";
+    else if (rbPresidencial.isSelected()) tipo = "Presidencial";
+
+    // Validamos que el nombre no esté vacío
+    if (nombre.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese el nombre del huésped.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    // Agregammos la tabla 
+    Object[] nuevaFila = {nombre, tipo, ubicacion, costo};
+    modeloTabla.addRow(nuevaFila);
+    JOptionPane.showMessageDialog(this, "Reservación registrada para: " + nombre);
+}
     }
 }
