@@ -113,7 +113,7 @@ public class Ventana extends JFrame {
 
         // Parte asignada a: Karol
         // Agregar el evento para guardar en la tabla
-        // btnRegistrar.addActionListener(e -> { llamar a metodo guardar });
+        btnRegistrar.addActionListener(e -> registrarReserva());
 
         panelBtns.add(btnCalcular);
         panelBtns.add(btnRegistrar);
